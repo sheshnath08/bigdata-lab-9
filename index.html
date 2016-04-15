@@ -97,7 +97,8 @@
         displacement: 'displacement',
         cylinder: 'cylinder',
         horsepower: 'horsepower',
-        weight: 'weight'
+        weight: 'weight',
+        acceleration : 'acceleration'
     };
 
 
@@ -124,6 +125,7 @@
             d.cylinders = +d.cylinders;
             d.horsepower = +d.horsepower;
             d.weight = +d.weight;
+            d.acceleration = +d.acceleration;
         });
 
         x.domain(d3.extent(data, function(d) { return d.displacement; })).nice();
@@ -217,6 +219,7 @@
     <option value ="cylinders">cylinders</option>
     <option value ="horsepower">Horsepower</option>
     <option value ="weight">Weight</option>
+    <option value ="acceleration">Acceleration</option>
 </select>
 
 <div id="label2"><b>y-Axis:</b></div>
@@ -226,6 +229,7 @@
     <option value ="cylinders">cylinders</option>
     <option value ="horsepower">Horsepower</option>
     <option value ="weight">Weight</option>
+    <option value ="acceleration">Acceleration</option>
 </select>
 
 <br>
