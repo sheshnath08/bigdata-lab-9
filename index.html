@@ -27,7 +27,7 @@
         shape-rendering: crispEdges;
     }
 
-    .dot {
+    circle {
         stroke: #000;
     }
 
@@ -153,10 +153,10 @@
                 .style("text-anchor", "end")
                 .text("mpg")
 
-        var circles = svg.selectAll(".dot")
+        var circles = svg.selectAll("circle")
                 .data(data)
                 .enter().append("circle")
-                .attr("class", "dot")
+                //.attr("class", "dot")
                 .attr("r", 3.5)
                 .attr("cx", function(d) { return x(d.displacement); })
                 .attr("cy", function(d) { return y(d.mpg); })
@@ -171,7 +171,7 @@
 
             svg.select(".x.axis").transition().call(xAxis);
 
-            svg.selectAll(".dot").transition().attr("cx", function(d) {
+            svg.selectAll("circle").transition().attr("cx", function(d) {
                 return x(d[xAxy]);
             });
             svg.selectAll(".x.axis").selectAll("text.label").text(axisNames[xAxy]);
@@ -181,28 +181,64 @@
             yAxy = this.value;
             y.domain(d3.extent(data, function(d) { return d[yAxy]; })).nice();
             svg.select(".y.axis").transition().call(yAxis);
-            svg.selectAll(".dot").transition().attr("cy", function(d) {
+            svg.selectAll("circle").transition().attr("cy", function(d) {
                 return y(d[yAxy]);
             });
             svg.selectAll(".y.axis").selectAll("text.label").text(axisNames[yAxy]);
         });
 
+
+	var upd = function(val) {
+	
+	var circles = val	;
+	debugger;
+	circles.enter().append("circle")
+	
+	
+	};
+
        d3.select('#update').on('click', function() {
-           var min =30;
-           var max = 36;
+           var min = document.getElementById('mpg-min');
+           var max = document.getElementById('mpg-max');
            //hardcoaded is working, I don't know how to get value from textbox
-           console.log(max,min);
-           svg.selectAll(".dot")
-                   .filter(function(d) {
-                       return !(d.mpg <=max && d.mpg >= min);
+		   //alert(min.value);
+		   //alert(max.value);
+           //console.log(max,min);
+		   
+		   var circles = svg.selectAll("circle").data(data)
+		   
+
+           
+		   circles.enter()
+		   .append("circle").filter(function(d) {
+					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
+                       return !(d.mpg <=max.value && d.mpg >= min.value);
+                   });
+		   		   
+					circles.filter(function(d) {
+					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
+                       return !(d.mpg <=max.value && d.mpg >= min.value);
                    })
-                   .attr("r", 3.5)
+					.attr("r", 3.5)
                    .attr("cx", function(d) { return x(d.displacement); })
                    .attr("cy", function(d) { return y(d.mpg); })
+				   .attr("fill", "red")
                    .on("mouseover",function (d) {
-                       d3.select('#hovered').text(d.name);})
+                       d3.select('#hovered').text(d.name);});
+				   
+         circles.exit().remove().filter(function(d) {
+					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
+                       return (d.mpg <=max.value && d.mpg >= min.value);
+                   });
+		   		   
+		
+			
+			
+
+					 
 
        });
+
 
     });
 
@@ -235,8 +271,8 @@
 <br>
 
 <div>
-    <input id="mpg-min" type="text" value="0" size="10">
-    <input id="mpg-max" type="text" value="30" size="10">
+    <input id="mpg-min" type="text" value = "0" size="10">
+    <input id="mpg-max" type="text" value = "30" size="10">
     <button id="update">Query MPG</button>
 </div>
 
