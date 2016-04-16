@@ -74,6 +74,11 @@
 <body>
 <h4 id="hovered">chevrolet chevelle malibu</h4>
 
+<div>
+    <input id="mpg-min" type="text" size="10">
+    <input id="mpg-max" type="text"  size="10">
+    <button id="update">Query MPG</button>
+</div>
 <script src="bower_components/d3/d3.min.js"></script>
 
 <script>
@@ -117,6 +122,7 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+	var globaldata;
 
     d3.csv("car.csv", function(error, data) {
         data.forEach(function(d) {
@@ -153,6 +159,7 @@
                 .style("text-anchor", "end")
                 .text("mpg")
 
+	   
         var circles = svg.selectAll("circle")
                 .data(data)
                 .enter().append("circle")
@@ -187,17 +194,10 @@
             svg.selectAll(".y.axis").selectAll("text.label").text(axisNames[yAxy]);
         });
 
-
-	var upd = function(val) {
-	
-	var circles = val	;
-	debugger;
-	circles.enter().append("circle")
-	
-	
-	};
-
+	globaldata = data;
+    });
        d3.select('#update').on('click', function() {
+		
            var min = document.getElementById('mpg-min');
            var max = document.getElementById('mpg-max');
            //hardcoaded is working, I don't know how to get value from textbox
@@ -205,31 +205,27 @@
 		   //alert(max.value);
            //console.log(max,min);
 		   
-		   var circles = svg.selectAll("circle").data(data)
+		   var circles = svg.selectAll("circle").data(globaldata.filter(function(d) {
+                       return (d.mpg <=max.value && d.mpg >= min.value);
+                   }));
 		   
 
-           
+		   var xa = document.getElementById('xAXs');
+		   var ya = document.getElementById('yAXs');
+           //alert(xa.value);
 		   circles.enter()
-		   .append("circle").filter(function(d) {
-					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
-                       return !(d.mpg <=max.value && d.mpg >= min.value);
-                   });
+		   .append("circle");
 		   		   
-					circles.filter(function(d) {
-					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
-                       return !(d.mpg <=max.value && d.mpg >= min.value);
-                   })
+					circles
 					.attr("r", 3.5)
-                   .attr("cx", function(d) { return x(d.displacement); })
-                   .attr("cy", function(d) { return y(d.mpg); })
-				   .attr("fill", "red")
+                   .attr("cx", function(d) { return x(d[xa.value]); })
+                   .attr("cy", function(d) { return y(d[ya.value]); })
+				   //.attr("fill", "red")
                    .on("mouseover",function (d) {
                        d3.select('#hovered').text(d.name);});
 				   
-         circles.exit().remove().filter(function(d) {
-					   //alert(!(d.mpg <=max.value && d.mpg >= min.value));
-                       return (d.mpg <=max.value && d.mpg >= min.value);
-                   });
+         circles.exit().remove();
+		
 		   		   
 		
 			
@@ -240,7 +236,7 @@
        });
 
 
-    });
+
 
 
 </script>
@@ -270,10 +266,5 @@
 
 <br>
 
-<div>
-    <input id="mpg-min" type="text" value = "0" size="10">
-    <input id="mpg-max" type="text" value = "30" size="10">
-    <button id="update">Query MPG</button>
-</div>
 
 </body>
