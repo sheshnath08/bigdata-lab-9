@@ -41,44 +41,41 @@
     }
 
     #xAXs {
-        position: relative;
-        left: 290px;
-        bottom: 30px;
+        //position: relative;
+        //left: 290px;
+        //bottom: 30px;
     }
 
     #yAXs {
-        position: relative;
-        bottom: 30px;
-        left: 315px;
+       // position: relative;
+       // bottom: 30px;
+       // left: 315px;
 
     }
 
     #label {
-        position: absolute;
-        top: 599px;
-        bottom: 125px;
-        left: 300px;
-        right: 0px;
+        //position: absolute;
+        //top: 599px;
+        //bottom: 125px;
+        //left: 300px;
+        //right: 0px;
     }
 
     #label2 {
-        position: absolute;
-        top: 599px;
-        bottom: 125px;
-        left: 430px;
-        right: 0px;
+        //position: absolute;
+        //top: 599px;
+        //bottom: 125px;
+        //left: 430px;
+        //right: 0px;
     }
+
 
 </style>
 
 <body>
 <h4 id="hovered">chevrolet chevelle malibu</h4>
 
-<div>
-    <input id="mpg-min" type="text" size="10">
-    <input id="mpg-max" type="text"  size="10">
-    <button id="update">Query MPG</button>
-</div>
+
 <script src="bower_components/d3/d3.min.js"></script>
 
 <script>
@@ -122,7 +119,7 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	var globaldata;
+	
 
     d3.csv("car.csv", function(error, data) {
         data.forEach(function(d) {
@@ -194,8 +191,8 @@
             svg.selectAll(".y.axis").selectAll("text.label").text(axisNames[yAxy]);
         });
 
-	globaldata = data;
-    });
+	var globaldata = data;
+  
        d3.select('#update').on('click', function() {
 		
            var min = document.getElementById('mpg-min');
@@ -228,7 +225,7 @@
 		
 		   		   
 		
-			
+		  });	
 			
 
 					 
@@ -240,11 +237,13 @@
 
 
 </script>
+
 <br><br>
-
-
-<div id="label"><b>x-Axis:</b></div>
-<br>
+<center>
+<table>
+<tr>
+<td><div id="label"><b>x-Axis:</b></div></td>
+<td>
 <select name="xAX" id="xAXs">
     <option value ="mpg">mpg</option>
     <option value ="displacement"  selected="true">Displacement</option>
@@ -253,9 +252,9 @@
     <option value ="weight">Weight</option>
     <option value ="acceleration">Acceleration</option>
 </select>
-
-<div id="label2"><b>y-Axis:</b></div>
-<select name="yAX" id="yAXs">
+</td>
+<td><div id="label2"><b>y-Axis:</b></div></td>
+<td><select name="yAX" id="yAXs">
      <option value ="mpg"  selected="true">mpg</option>
     <option value ="displacement">Displacement</option>
     <option value ="cylinders">cylinders</option>
@@ -263,8 +262,23 @@
     <option value ="weight">Weight</option>
     <option value ="acceleration">Acceleration</option>
 </select>
-
+</td>
+</tr>
+</table>
 <br>
+<div>
+<table>
+<tr>
+<td> <input id="mpg-min" type="text" value = 0 size="10"></td>
+<td><input id="mpg-max" type="text" value = 30 size="10"></td>
+<td><button id="update">Query MPG</button></td>
+</tr>
+</table>
+</div>
+</center>
 
+   
+    
+    
 
 </body>
