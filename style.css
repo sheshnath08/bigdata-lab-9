@@ -1,0 +1,30 @@
+body {
+    font: 15px sans-serif;
+}
+.name{
+    position: relative;
+    top: 90px;
+    text-align: left;
+    font-weight: bold;
+}
+.title {
+    position: relative;
+    text-align: left;
+    font-size: 25px;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+circle {
+    stroke: #000;
+}
+#filter {
+    position: absolute;
+}
+#mark {
+    padding-left: 150px;
+    position: inherit;
+}
